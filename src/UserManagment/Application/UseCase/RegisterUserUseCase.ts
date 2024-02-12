@@ -1,4 +1,3 @@
-import { response } from "express";
 import { Contact } from "../../Domain/Entitys/Contact";
 import { Credential } from "../../Domain/Entitys/Credential";
 import { Status } from "../../Domain/Entitys/Status";
@@ -19,7 +18,7 @@ export class RegisterUserUseCase {
             const response = await this.repository.save(user);
             return response;
         } catch (error) {
-            
+            return error;
         }
     }
 }

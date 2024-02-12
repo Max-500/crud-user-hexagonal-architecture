@@ -1,11 +1,13 @@
 import { v4 as uuidv4 } from 'uuid';
 
 export class Status {
-    public token:string;
+    public token:string|null;
+    public activationToken:string;
     public verifiedAt:Date;
 
     constructor(verifiedAt:Date){
-        this.token = this.generateShortToken();
+        this.token = null;
+        this.activationToken = this.generateShortToken();
         this.verifiedAt = verifiedAt;
     }
 

@@ -11,8 +11,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RegisterUserController = void 0;
 class RegisterUserController {
-    constructor(registerUseCase, emailService) {
-        this.registerUseCase = registerUseCase;
+    constructor(registerUserUseCase, emailService) {
+        this.registerUserUseCase = registerUserUseCase;
         this.emailService = emailService;
     }
     run(req, res) {
@@ -26,7 +26,7 @@ class RegisterUserController {
             if (!this.emailIsValid(req.body.email)) {
                 return res.status(400).json({
                     error: "Bad Request",
-                    message: "Estructura del email incorrecta.."
+                    message: "Estructura del email incorrecta."
                 });
             }
             if (!this.nameIsValid(req.body.name + " " + req.body.lastname)) {
@@ -41,7 +41,7 @@ class RegisterUserController {
                     message: "La contraseña debe tener al menos 8 caracteres, incluir un número y un carácter especial."
                 });
             }
-            const user = yield this.registerUseCase.run(req.body.name, req.body.lastname, req.body.cellphone, req.body.email, req.body.password);
+            const user = yield this.registerUserUseCase.run(req.body.name, req.body.lastname, req.body.cellphone, req.body.email, req.body.password);
             if (user.error === true) {
                 return res.status(500).json(user);
             }

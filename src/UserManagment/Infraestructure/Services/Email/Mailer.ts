@@ -6,7 +6,7 @@ const transporter = nodemailer.createTransport({
     secure: true,
     auth: {
         user: '213497@ids.upchiapas.edu.mx',
-        pass: 'clave-secreta'
+        pass: 'tu clave secreta va aqui'
     }
 })
 

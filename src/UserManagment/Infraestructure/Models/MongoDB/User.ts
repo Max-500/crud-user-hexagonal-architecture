@@ -1,7 +1,5 @@
-// Asumiendo que este archivo esté ubicado en src/Database/Models/Mongo/User.ts
 import mongoose, { Schema, Document } from 'mongoose';
 
-// Interfaz para tipar el modelo de User y asegurar el tipado en TypeScript
 interface IUser extends Document {
   id: string;
   name: string;
@@ -9,6 +7,7 @@ interface IUser extends Document {
   cellphone: string;
   email: string;
   password: string;
+  token?:string,
   activationToken?: string;
   verifiedAt?: Date;
 }
@@ -21,10 +20,11 @@ const UserSchema: Schema = new Schema({
   cellphone: { type: String, required: true, unique: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
+  token: { type:String, default:null },
   activationToken: { type: String, default: null },
   verifiedAt: { type: Date, default: null },
 }, {
-  timestamps: true, // Mongoose automáticamente añade createdAt y updatedAt
+  timestamps: true,
 });
 
 const UserModel = mongoose.model<IUser>('User', UserSchema);

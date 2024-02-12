@@ -7,11 +7,17 @@ import { UserMySqlRepository } from "./Repositories/UserMySqlRepository";
 import { UserMongoRepository } from "./Repositories/UserMongoRepository";
 import { MongoConfig } from "../../Database/Config/MongoDb/MongoConfig";
 import { EmailService } from "./Services/Email/Email";
+import { ActivateUserUseCase } from "../Application/UseCase/ActivateUserUseCase";
+import { ActivateUserController } from "./Controllers/ActivateUserController";
+import { LoginUserUseCase } from "../Application/UseCase/LoginUserUseCase";
+import { LoginUserController } from "./Controllers/LoginUserController";
+import { LogoutUserUseCase } from "../Application/UseCase/LogoutUserUseCase";
+import { LogoutUserController } from "./Controllers/LogoutUserController";
 
 const mysqlRepository = new UserMySqlRepository();
 const mongoRepository = new UserMongoRepository();
 
-const currentRepository = mongoRepository;
+const currentRepository = mysqlRepository;
 
 function getDatabaseConfig(currentRepository: any): DatabaseConfig {
     if (currentRepository instanceof UserMySqlRepository) {
@@ -22,12 +28,21 @@ function getDatabaseConfig(currentRepository: any): DatabaseConfig {
     throw new Error('Unsupported repository type');
   }
 
-const registerUserCase = new RegisterUserUseCase(currentRepository);
-const registerUserController = new RegisterUserController(registerUserCase, new EmailService());
+const registerUserUseCase = new RegisterUserUseCase(currentRepository);
+const registerUserController = new RegisterUserController(registerUserUseCase, new EmailService());
+
+const activateUserUseCase = new ActivateUserUseCase(currentRepository);
+const activateUserController = new ActivateUserController(activateUserUseCase);
+
+const loginUserUseCase = new LoginUserUseCase(currentRepository);
+const loginUserController = new LoginUserController(loginUserUseCase);
+
+const logoutUserUseCase = new LogoutUserUseCase(currentRepository);
+const logoutUserController = new LogoutUserController(logoutUserUseCase);
 
 const dbConfig = getDatabaseConfig(currentRepository);
 dbConfig.initialize().then(() => {
   console.log('Database initialized.');
 });
 
-export { registerUserController }
+export { registerUserController, activateUserController, loginUserController, logoutUserController }

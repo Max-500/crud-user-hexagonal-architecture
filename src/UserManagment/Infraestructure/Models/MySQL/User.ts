@@ -9,6 +9,7 @@ export class UserModel extends Model {
     public cellphone!: string;
     public email!: string;
     public password!: string;
+    public token!: string | null;
     public activationToken!: string | null;
     public verifiedAt!: Date | null;
 }
@@ -39,6 +40,10 @@ UserModel.init({
     password: {
         type: DataTypes.STRING,
         allowNull: false,
+    },
+    token:{
+        type: DataTypes.STRING,
+        allowNull: true
     },
     activationToken: {
         type: DataTypes.STRING,

@@ -1,20 +1,14 @@
-import { Router, Request, Response } from 'express';
-import { registerUserController } from '../dependencies';
+import { Router } from 'express';
+import { registerUserController, activateUserController, loginUserController, logoutUserController } from '../dependencies';
 
 const router = Router();
 
 router.post('/', registerUserController.run.bind(registerUserController));
 
-router.put('/:token/activate', (req:Request, res:Response) => {
+router.put('/:token/activate', activateUserController.run.bind(activateUserController));
 
-});
+router.post('/auth/login', loginUserController.run.bind(loginUserController));
 
-router.post('/auth/login', (req:Request, res:Response) => {
-
-});
-
-router.post('/auth/logout', (req:Request, res:Response) => {
-
-});
+router.post('/auth/logout', logoutUserController.run.bind(logoutUserController));
 
 export default router;

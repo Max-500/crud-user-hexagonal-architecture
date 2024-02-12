@@ -11,7 +11,7 @@ const transporter = nodemailer_1.default.createTransport({
     secure: true,
     auth: {
         user: '213497@ids.upchiapas.edu.mx',
-        pass: 'clave'
+        pass: 'tu clave secreta va aqui'
     }
 });
 exports.transporter = transporter;
